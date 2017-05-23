@@ -1,0 +1,150 @@
+Ext.define('nx.grid.GridBase',{
+	extend: 'Ext.grid.Panel',
+	alias: ['widget.nxGrid'],
+	
+	requires: [
+        'Ext.grid.plugin.RowEditing'
+	],
+	
+	config: {
+		querycols : null,
+		querystr : null,
+		
+		/**
+		 * 그리드 디테일 : 배열로 입력
+		 * [{obj: xx, fk:'fkfield'}]
+		 */
+		gridDetail: null,
+		
+		/**
+		 * 그리드 마스터 : 객체로 설정 
+		 */
+		gridMaster: null
+	},
+	initComponent: function() {
+		var me = this;
+		
+        this.plugins = [ Ext.create('Ext.grid.plugin.RowEditing', { pluginId: 'rowEditing', clickToMoveEditor: 0, autoCancel: true})];
+		
+		me.on({		    
+		    select: {fn: this.onSelect, scope: this}				    			     
+		});
+				
+		me.callParent();
+		
+		me.getStore().on({
+			load: {fn :this.onAfterLoad, scope: this}
+		})
+	},	
+	onSelect: function( rowModel, record, index, eOpts ) {
+		this.fnDetailGridLoad(record);
+	},
+	onAfterLoad: function (store, records, successful, operation, eOpts ) {
+		this.fnDetailGridClear();	
+	},
+	fnLoad : function() {		
+		this.store.load({			
+		    scope: this,
+		    callback: function(records, operation, success) {
+		        //console.log(records);
+		    	Ext.log({indent:1},'aaa');
+		    }
+		});
+	},
+	fnLoadParam : function(param) {
+		this.store.getProxy().setExtraParams(param);
+		this.store.load({			
+		    scope: this,
+		    callback: function(records, operation, success) {		        
+		        console.log(records);
+		    }
+		});
+	},
+	fnSave: function() {
+		this.store.sync();
+	},
+	/**
+	 * 디테일 그리드로 설정된 그리드를 조회
+	 * @param {} record
+	 * @return {Boolean}
+	 */
+	fnDetailGridLoad: function(record) {		
+		
+		var rtn = false; 
+						
+		if (this.gridDetail instanceof Array) {
+			for (i in this.gridDetail) {				
+				
+				var gridObj = this.gridDetail[i];				
+				var rec = {};
+				
+				if ( Ext.isEmpty(record) ) {					
+					gridObj.obj.getStore().loadData([],false);	
+				} else {
+					console.log(record);
+					rec[gridObj.fk] = record.getId();
+					gridObj.obj.fnLoadParam(rec);
+					rtn = true;					
+				}					
+			}		
+		}
+		
+		return rtn;
+	
+	},
+	fnDetailGridClear: function() {
+		if (this.gridDetail instanceof Array) {
+			for (i in this.gridDetail) {								
+				var gridObj = this.gridDetail[i];											
+				gridObj.obj.getStore().loadData([],false);										
+			}		
+		}
+	},
+	fnAddRecord: function(grid, rec, idx, colIdx, callback, scope ) {		
+		var store = grid.getStore();
+		var rowIdx = store.indexOf(rec);
+		var selModel = grid.getSelectionModel();
+		var edit = grid.getPlugin('rowEditing');
+		
+		if (Ext.isNumber(idx)) {
+			store.insert(idx, rec);
+		} else {
+			store.add(rec);
+		}		
+		
+		edit.cancelEdit();
+		selModel.select(rowIdx);		
+		edit.startEdit(rec,colIdx);
+		
+		if (Ext.isEmpty(scope)) {
+			scope = grid;			
+		}
+		
+		if (Ext.isFunction(callback)) {
+			Ext.callback(callback, scope, [selectionModel.getSelection()]);
+		}			
+	},
+	fnDelRecord: function(grid, callback, scope) {		
+		var sel = grid.getSelection();
+		var store = grid.getStore();		
+		
+		if (!sel[0].isModel) {
+			Ext.log({mgs: 'Row를 선택해주세요.', level: "error" });
+		}
+		
+		store.remove(sel);		
+				
+		if (Ext.isFunction(callback)) {
+			Ext.callback(callback, scope, [sel]);
+		}
+		
+	},
+	fnGetMasterPkVal: function() {
+		var rtn = null
+		var sel = this.gridMaster.getSelection()[0];
+		if (sel.isModel) {
+			rtn = sel.get(sel.idProperty);
+		}
+		return rtn;
+	}
+})
