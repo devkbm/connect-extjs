@@ -5,9 +5,7 @@ Ext.define('Connect.view.admin.board.PanelBoard', {
     extend: 'nx.form.PanelBase',
     //extend: 'Ext.form.Panel',
     alias: 'widget.panelBoard',
-    requires: [   	
-   		'nx.form.PanelMultiUpload'
-    ],               
+             
     initComponent: function() {
         var me = this;
                 								
@@ -17,7 +15,7 @@ Ext.define('Connect.view.admin.board.PanelBoard', {
             scope : this,            
             iconCls: 'x-fa fa-file-o',
             handler: function(target, event) {
-                this.fnResetRecord(Grw.model.Board);                 
+                this.fnResetRecord(Connect.model.Board);                 
             }
         },{
             itemId: 'saveDetail',
@@ -33,7 +31,7 @@ Ext.define('Connect.view.admin.board.PanelBoard', {
             scope : this,            
             iconCls: 'x-fa fa-floppy-o',
         	handler: function(target, event) {        		
-        		this.fnLoad(Grw.model.Board,null,{pkBoard: this.fnFindField('pkBoard').getValue()});
+        		this.fnLoad(Connec.model.Board,null,{pkBoard: this.fnFindField('pkBoard').getValue()});
         		//this.fnLoad(Grw.model.Employee,null,{emplNum: this.fnFindField('emplNum').getValue()});
         	}        
         }];
@@ -85,11 +83,6 @@ Ext.define('Connect.view.admin.board.PanelBoard', {
                 xtype: 'numberfield',
                 fieldLabel: '순서',
                 minValue: 0
-            },{
-             	itemId: 'upload',
-	    		xtype:'nxPanelMultiUpload',
-	    		height:200,
-	    		width:'100%'
             }
             ]
         });

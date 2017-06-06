@@ -8,7 +8,7 @@ Ext.define('Connect.view.admin.board.ConAdminBoardController', {
 		//panelBoard.fnLoadRecord({pkboard: record.data.id});
 		//panelBoard.load(record);
 			
-		panelBoard.fnLoad(Grw.model.Board, record.data.id, {'pkBoard': record.data.id});
+		panelBoard.fnLoad(Connect.model.Board, record.data.id, {'pkBoard': record.data.id});
 
 		/*panelBoard.getModel().getProxy().setExtraParam('pkboard',record.data.id);
 		panelBoard.getModel().load({ // load user with ID of "1"			

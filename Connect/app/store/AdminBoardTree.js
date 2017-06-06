@@ -1,11 +1,11 @@
 Ext.define('Connect.store.AdminBoardTree', {
  	extend: 'Ext.data.TreeStore',
     model: 'Connect.model.BoardTree',
-    nodeParam: 'ppkboard',
-    defaultRootProperty: 'recv',
+    nodeParam: 'parentId',
+    defaultRootProperty: 'data',
     proxy: {
         type: 'ajax',
-        url: '/grw/board/sBoardTree.do',
+        url: 'http://localhost:8090/grw/boardHierarchy',
         reader: {
             type: 'json'
         },
