@@ -16,7 +16,9 @@ Ext.define('Connect.model.Board', {
 	         {name: 'fromDt',		type: 'date', dateFormat: 'Y-m-d'},
 	         {name: 'toDt',			type: 'date', dateFormat: 'Y-m-d'},
 	         {name: 'useYn',		type: 'string'},
-	         {name: 'articleCnt',	type: 'string'},
+			 {name: 'pwdYn',		type: 'string'},
+			 {name: 'pwdMethod',	type: 'string'},
+	         {name: 'articleCnt',	type: 'string'},			 
 	         {name: 'seq',			type: 'string'}	         
 	],
 	proxy: {

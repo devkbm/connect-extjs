@@ -79,6 +79,17 @@ Ext.define('Connect.view.admin.board.PanelBoard', {
                 inputValue: 'Y',
                 uncheckedValue: 'N'
             }, {
+                name: 'pwdYn',
+                xtype: 'checkboxfield',
+                fieldLabel: '비밀번호 사용여부',
+                inputValue: 'Y',
+                uncheckedValue: 'N'
+            }, {
+                name: 'pwdMethod',
+                xtype: 'textfield',
+                fieldLabel: '암호화 방법',
+                allowBlank: false
+            }, {
                 name: 'seq',
                 xtype: 'numberfield',
                 fieldLabel: '순서',
