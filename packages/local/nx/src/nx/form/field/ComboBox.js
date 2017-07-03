@@ -21,8 +21,8 @@ Ext.define('nx.form.field.ComboBox', {
     	var me = this;
         
     	me.queryMode = 'local';
-      	me.displayField = 'cdName';
-      	me.valueField = 'cd';
+      	me.displayField = 'codeName';
+      	me.valueField = 'code';
     	
       	me.store = Ext.create('Ext.data.Store', {    		
 	   		model: 'nx.model.CommonCode',

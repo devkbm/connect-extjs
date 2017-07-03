@@ -48,9 +48,9 @@ Ext.define('Connect.view.admin.board.PanelBoard', {
                 name: 'boardType',
                 xtype: 'nxcombo',
                 fieldLabel: '게시판 타입',
-                cdGroup: 'G0001',                 
-            	displayField : 'cdName',
-      			valueField : 'cd',
+                cdGroup: 'AA',                 
+            	displayField : 'codeName',
+      			valueField : 'code',
       			queryMode: 'local',
                 allowBlank: false
             }, {
