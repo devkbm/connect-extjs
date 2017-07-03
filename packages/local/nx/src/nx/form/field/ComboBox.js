@@ -28,7 +28,7 @@ Ext.define('nx.form.field.ComboBox', {
 	   		model: 'nx.model.CommonCode',
 		    proxy: {
 		    	type: 'ajax',
-		        url: '/cmn/cmncd/getComboCodeList.do',
+		        url: 'http://localhost:8090/common/codegroups/codes',
 		        reader: {
 		        	type: 'json',
 		            rootProperty: 'data'
@@ -47,7 +47,7 @@ Ext.define('nx.form.field.ComboBox', {
 		      	      	      	  
     },
     onAfterrenderer: function(view, eOpts) {
-    	this.store.proxy.setExtraParam('cdGroup', this.cdGroup); 
+    	this.store.proxy.setExtraParam('codeGroup', this.cdGroup); 
       	
       	this.store.load({
       		scope: this,
