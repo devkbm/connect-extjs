@@ -48,6 +48,7 @@ Ext.define('nx.form.field.ComboBox', {
     },
     onAfterrenderer: function(view, eOpts) {
     	this.store.proxy.setExtraParam('codeGroup', this.cdGroup); 
+		this.store.proxy.setExtraParam('qType', 'combo'); 
       	
       	this.store.load({
       		scope: this,

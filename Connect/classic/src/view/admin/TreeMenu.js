@@ -40,14 +40,14 @@ Ext.define('Connect.view.admin.TreeMenu', {
 					                leaf: true					            	
 					            },
 					            {
-					            	text: '표준단어사전',
-					                title: '표준단어사전',
+					            	text: '표준용어사전',
+					                title: '표준용어사전',
 					                pgmId: 'Connect.view.admin.dictionary.PanelDictionary',
 					                leaf: true	
 					            },
 					            {
-					            	text: '표준단어사전그리드',
-					                title: '표준단어사전그리드',
+					            	text: '표준용어사전그리드',
+					                title: '표준용어사전그리드',
 					                pgmId: 'Connect.view.admin.dictionary.GridDict',
 					                leaf: true	
 					            },
