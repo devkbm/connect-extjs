@@ -1,13 +1,14 @@
 Ext.define('Connect.store.DictionaryList', {
 	extend: 'Ext.data.Store',
 	model: 'Connect.model.Dictionary',
-	proxy: {
-		type: 'ajax',
+	proxy: {		
+		type: 'rest',
+		appendId: true,
 		api: {
-			read  : '/hrm/employee/getEmployeeDeptList.do', 
-			create: '/hrm/employee/exeEmployeeDept.do?action=c',
-			update: '/hrm/employee/exeEmployeeDept.do?action=u',
-			destroy:'/hrm/employee/exeEmployeeDept.do?action=d'
+			read  : 'http://localhost:8090/common/terms', 
+			create: 'http://localhost:8090/common/terms', 
+			update:	'http://localhost:8090/common/terms', 
+			destroy:'http://localhost:8090/common/terms'
 		},
 		reader: {
 			type: 'json',
@@ -25,10 +26,8 @@ Ext.define('Connect.store.DictionaryList', {
 		beforeload: function (dataStore, oper) {
 			//comboStore.load();
 		},
-		load: function(dataStore, rows, bool) {
-			// 데이터가 읽어진후에 발생하는 이벤트
-    		//alert('asdf');				
-			//grid.getView().refresh();
+		// 데이터가 읽어진후에 발생하는 이벤트    
+		load: function(dataStore, rows, bool) {			
     	}
 	}
 }); 

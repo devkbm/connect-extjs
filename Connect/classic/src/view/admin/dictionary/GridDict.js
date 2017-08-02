@@ -19,32 +19,36 @@ Ext.define('Connect.view.admin.dictionary.GridDict', {
     initComponent: function() {
         var me = this;
         
-        this.store = Ext.create('Grw.store.DictionaryList');           
-        
+        this.store = Ext.create('Connect.store.DictionaryList');                   		 
+
         this.columns = [                    	
-  		  	{dataIndex: 'pkDictionary',width: 50,	text: '고유키',		hidden: true},
-  		  	{dataIndex: 'wordType',	width: 100,	text: '유형', 	align: 'center'},
-  		  	{dataIndex: 'word',		width: 50,	text: '단어'},
-		  	{dataIndex: 'meaning',	width: 100,	text: '의미', 		align: 'center'},  		    		  
-		  	{dataIndex: 'abbrKor',	width: 100,	text: '약어(한글)', 	align: 'center'},
-		  	{dataIndex: 'abbrEng',	width: 100,	text: '약어(영문)', 	align: 'center'}  		  			      		   		    		   
+  		  	{dataIndex: 'pkTerm',			width: 50,	text: 'PrimaryKey',		hidden: true},
+  		  	{dataIndex: 'nameKor',			width: 100,	text: '용어명', 		 align: 'center'},
+  		  	{dataIndex: 'abbreviation',		width: 50,	text: '약어(한글)', 	align: 'left'},
+		  	{dataIndex: 'nameEng',			width: 100,	text: '용어명(영문)',   align: 'center'},  		    		  
+		  	{dataIndex: 'abbreviationEng',	width: 100,	text: '약어(영문)', 	align: 'center'},
+		  	{dataIndex: 'detail',			width: 100,	text: '상세내역',		align: 'center'},
+			{dataIndex: 'cmt',				width: 100,	text: '비고',			  align: 'left'}
           ];                           
         	    
     	this.querycols = [{		
-			text: '의미',
-			value: 'meaning',
+			text: '용어명',
+			value: 'nameKor',
 			checked: true
 		},{
-			text: '단어',
-			value: 'word'
+			text: '약어(한글)',
+			value: 'abbreviation'
 		},{
-			text: '유형',
-			value: 'wordType'
+			text: '용어명(영문)',
+			value: 'nameEng'
+		},{
+			text: '약어(영문)',
+			value: 'abbreviationEng'
 		}];
     	
-	    this.querystr = 'meaning';         
+	    this.querystr = 'nameKor';         
 	    
-	    //this.dockedItems = [this.createToolbar()];	    	    	   	  	   
+	    this.dockedItems = [this.createToolbar()];	    	    	   	  	   
 	    
         me.callParent(arguments);                                                       
     },
@@ -91,8 +95,7 @@ Ext.define('Connect.view.admin.dictionary.GridDict', {
             }	                
     	},{
     		itemId: 'refresh',
-    		text: '조회',
-    	 	//icon: '/images/icon/zoom.png',
+    		text: '조회',    	 	
     	 	iconCls: 'x-fa fa-search',
 	    	scope: this,
 	    	handler: function(target, event) {

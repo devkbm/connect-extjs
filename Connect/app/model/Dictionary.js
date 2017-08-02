@@ -2,27 +2,28 @@ Ext.define('Connect.model.Dictionary', {
 	extend: 'Ext.data.Model',
 	requires: ['Ext.data.identifier.Negative'],
     identifier: 'negative',
-	idProperty: 'pkDictionary',
+	idProperty: 'pkTerm',
 	fields: [	         
-			 {name: 'sysDt',		type: 'date', dateFormat: 'c',	persist: false},
-			 {name: 'sysUser',		type: 'string',	persist: false},
-			 {name: 'updDt',		type: 'date', dateFormat: 'c',	persist: false},
-			 {name: 'updUser',		type: 'string',	persist: false},	         	                
-	         {name: 'pkDictionary',	type: 'int'},	         
-	         {name: 'word',			type: 'string'},	         
-	         {name: 'meaning',		type: 'string'},
-	         {name: 'abbrKor',		type: 'string', allowNull: true},	        
-	         {name: 'abbrEng',		type: 'string', allowNull: true},	         	         	        
-	         {name: 'wordType',		type: 'string', allowNull: true},	         
-	         {name: 'cmt',			type: 'string', allowNull: true}	         
+			 {name: 'sysDt',			type: 'date', dateFormat: 'c',	persist: false},
+			 {name: 'sysUser',			type: 'string',	persist: false},
+			 {name: 'updDt',			type: 'date', dateFormat: 'c',	persist: false},
+			 {name: 'updUser',			type: 'string',	persist: false},	         	                
+	         {name: 'pkTerm',			type: 'int'},	         
+	         {name: 'nameKor',			type: 'string'},
+	         {name: 'abbreviation',		type: 'string'},
+			 {name: 'nameEng',			type: 'string'},
+			 {name: 'abbreviationEng',	type: 'string'},
+			 {name: 'detail',			type: 'string'},			 
+	         {name: 'cmt',				type: 'string', allowNull: true}	         
 	],
 	proxy: {
-		type: 'ajax',
+		type: 'rest',
+		appendId: true,
 		api: {
-			read  : '/cmn/dictionary/getDictionaryList.do', 
-			create: '/cmn/dictionary/exeDictionary.do?action=c',
-			update: '/cmn/dictionary/exeDictionary.do?action=u',
-			destroy:'/cmn/dictionary/exeDictionary.do?action=d'
+			read  : 'http://localhost:8090/common/terms', 
+			create: 'http://localhost:8090/common/terms', 
+			update:	'http://localhost:8090/common/terms', 
+			destroy:'http://localhost:8090/common/terms'
 		},
 		reader: {
 			type: 'json',
