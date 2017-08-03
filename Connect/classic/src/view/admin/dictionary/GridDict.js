@@ -23,7 +23,10 @@ Ext.define('Connect.view.admin.dictionary.GridDict', {
 
         this.columns = [                    	
   		  	{dataIndex: 'pkTerm',			width: 50,	text: 'PrimaryKey',		hidden: true},
-  		  	{dataIndex: 'nameKor',			width: 100,	text: '용어명', 		 align: 'center'},
+  		  	{dataIndex: 'nameKor',			width: 100,	text: '용어명', 		 align: 'center',editor:{
+																											xtype:'textfield',
+																											allowBlank:false
+																										}},
   		  	{dataIndex: 'abbreviation',		width: 50,	text: '약어(한글)', 	align: 'left'},
 		  	{dataIndex: 'nameEng',			width: 100,	text: '용어명(영문)',   align: 'center'},  		    		  
 		  	{dataIndex: 'abbreviationEng',	width: 100,	text: '약어(영문)', 	align: 'center'},
@@ -101,7 +104,28 @@ Ext.define('Connect.view.admin.dictionary.GridDict', {
 	    	handler: function(target, event) {
 				this.fnLoad();
 			}
-    	});	
+    	},{
+			xtype: 'button',
+    		text: '행추가',   
+			scope : this, 	
+    		iconCls: 'x-fa fa-file-o',
+    	 	handler: function(target, event) {
+				console.log(this);
+				console.log(this.getStore());
+				console.log(this.getStore().getModel().getName());
+				var rec = Ext.create(this.getStore().getModel()); 
+				console.log(rec);
+    	 		this.fnAddRecord(this, rec, null, 0, null, null);
+	    	}
+		},{
+			itemId: 'saveDetail',
+	        text: '저 장',
+	        scope : this,
+	        iconCls: 'x-fa fa-floppy-o',
+	        handler: function(target, event) {
+				this.fnSave();
+			}
+		});	
     	
     	config.items = items;
         return Ext.create('widget.toolbar', config);
