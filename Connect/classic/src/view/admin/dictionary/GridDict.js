@@ -21,14 +21,45 @@ Ext.define('Connect.view.admin.dictionary.GridDict', {
         
         this.store = Ext.create('Connect.store.DictionaryList');                   		 
 
-        this.columns = [                    	
-  		  	{dataIndex: 'pkTerm',			width: 50,	text: 'PrimaryKey',		hidden: true},
-  		  	{dataIndex: 'nameKor',			width: 100,	text: '용어명', 		 align: 'center'},
-  		  	{dataIndex: 'abbreviation',		width: 50,	text: '약어(한글)', 	align: 'left'},
-		  	{dataIndex: 'nameEng',			width: 100,	text: '용어명(영문)',   align: 'center'},  		    		  
-		  	{dataIndex: 'abbreviationEng',	width: 100,	text: '약어(영문)', 	align: 'center'},
-		  	{dataIndex: 'detail',			width: 100,	text: '상세내역',		align: 'center'},
-			{dataIndex: 'cmt',				width: 100,	text: '비고',			  align: 'left'}
+        this.columns = [
+	    {
+                dataIndex: 'pkTerm',            
+                width: 50,    
+                text: 'PrimaryKey',        
+                hidden: true
+            },{
+                dataIndex: 'nameKor',            
+                width: 100,    text: '용어명',          
+                align: 'center',
+                editor: {
+                    allowblank: false
+                }
+            },{
+                dataIndex: 'abbreviation',        
+                width: 50,    
+                text: '약어(한글)',     
+                align: 'left'
+            },{
+                dataIndex: 'nameEng',            
+                width: 100,    
+                text: '용어명(영문)',   
+                align: 'center'
+            },{
+                dataIndex: 'abbreviationEng',    
+                width: 100,    
+                text: '약어(영문)',     
+                align: 'center'
+            },{
+                dataIndex: 'detail',            
+                width: 100,    
+                text: '상세내역',        
+                align: 'center'
+            },{
+                dataIndex: 'cmt',                
+                width: 100,    
+                text: '비고',              
+                align: 'left'
+            }
           ];                           
         	    
     	this.querycols = [{		
@@ -73,7 +104,7 @@ Ext.define('Connect.view.admin.dictionary.GridDict', {
     		itemId: 'searchField',	                
             xtype: 'textfield',
             hideLabel: true,
-            width: 140,
+            width: 200,
             enableKeyEvents: true, 
             triggers: {
 		        clear: {
@@ -101,7 +132,39 @@ Ext.define('Connect.view.admin.dictionary.GridDict', {
 	    	handler: function(target, event) {
 				this.fnLoad();
 			}
-    	});	
+	},{
+            xtype: 'button',
+            text: '행추가',        
+            iconCls: 'x-fa fa-file-o',
+            scope: this,
+             handler: function() {        
+                var rec = Ext.create(this.getStore().getModel(),{});
+                console.log(this.getStore());
+                console.log(this.getStore().getModel());
+                console.log(rec);
+
+                 this.fnAddRecord(this, rec,null, 0, null, null);
+            }
+        },{
+            xtype: 'button',
+            text: '행삭제',        
+            iconCls: 'x-fa fa-trash-o',
+            scope: this,
+             handler: function() {            
+                 this.fnDelRecord(this, null, null);
+            }
+        },{
+            itemId: 'saveDetail',
+            text: '저 장',
+            scope : this,            
+            iconCls: 'x-fa fa-floppy-o',
+            handler: function(target, event) {
+                Ext.Ajax.setCors(true);
+                this.fnSave();
+            }
+        });    
+
+		  );	
     	
     	config.items = items;
         return Ext.create('widget.toolbar', config);
