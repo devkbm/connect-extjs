@@ -24,7 +24,13 @@ Ext.define('nx.grid.GridBase',{
 	initComponent: function() {
 		var me = this;
 		
-        this.plugins = [ Ext.create('Ext.grid.plugin.RowEditing', { pluginId: 'rowEditing', clickToMoveEditor: 0, autoCancel: true})];
+        this.plugins = [ 
+			Ext.create('Ext.grid.plugin.RowEditing', {
+				pluginId: 'rowEditing', 
+				clickToMoveEditor: 0, 
+				autoCancel: true}
+			)
+		];
 		
 		me.on({		    
 		    select: {fn: this.onSelect, scope: this}				    			     
@@ -47,7 +53,7 @@ Ext.define('nx.grid.GridBase',{
 		    scope: this,
 		    callback: function(records, operation, success) {
 		        //console.log(records);
-		    	Ext.log({indent:1},'aaa');
+		    	//Ext.log({indent:1},'aaa');
 		    }
 		});
 	},
@@ -100,20 +106,32 @@ Ext.define('nx.grid.GridBase',{
 			}		
 		}
 	},
+	/**
+	 * 그리드 행추가 기능
+	 * @param grid		현재 그리드
+	 * @param rec		행추가할 레코드
+	 * @param idx 		행추가할 레코드 위치
+	 * @param colIdx	에디터가 활성화될 위치
+	 * @param callback	행추가후 실행될 callback function
+	 * @param scope		scope
+	 */
 	fnAddRecord: function(grid, rec, idx, colIdx, callback, scope ) {		
-		var store = grid.getStore();
-		var rowIdx = store.indexOf(rec);
+		var store = grid.getStore();		
 		var selModel = grid.getSelectionModel();
 		var edit = grid.getPlugin('rowEditing');
 		
-		if (Ext.isNumber(idx)) {
+		if (Ext.isEmpty(rec)) {
+			rec = Ext.create(grid.getStore().getModel(),{});
+		}
+
+		if (Ext.isNumber(idx) && idx >= 0) {
 			store.insert(idx, rec);
 		} else {
 			store.add(rec);
 		}		
 		
-		edit.cancelEdit();
-		selModel.select(rowIdx);		
+		edit.cancelEdit();		
+		selModel.select(store.indexOf(rec));		
 		edit.startEdit(rec,colIdx);
 		
 		if (Ext.isEmpty(scope)) {
