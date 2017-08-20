@@ -12,9 +12,9 @@ Ext.define('Connect.model.Dictionary', {
 	         {name: 'nameKor',			type: 'string'},
 	         {name: 'abbreviation',		type: 'string'},
 			 {name: 'nameEng',			type: 'string'},
-			 {name: 'abbreviationEng',	type: 'string'},
-			 {name: 'detail',			type: 'string'},			 
-	         {name: 'cmt',				type: 'string', allowNull: true}	         
+			 {name: 'abbreviationEng',	type: 'string', allowNull: true},
+			 {name: 'detail',			type: 'string', allowNull: true},			 
+	         {name: 'comment',			type: 'string', allowNull: true}	         
 	],
 	proxy: {
 		type: 'rest',

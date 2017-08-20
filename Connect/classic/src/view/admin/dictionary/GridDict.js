@@ -29,36 +29,44 @@ Ext.define('Connect.view.admin.dictionary.GridDict', {
                 hidden: true
             },{
                 dataIndex: 'nameKor',            
-                width: 100,    text: '용어명',          
-                align: 'center',
+                width: 100,    
+                text: '용어명',          
+                align: 'left',
                 editor: {
-                    allowblank: false
+                    allowBlank: false
                 }
             },{
                 dataIndex: 'abbreviation',        
-                width: 50,    
+                width: 100,    
                 text: '약어(한글)',     
-                align: 'left'
+                align: 'left',
+                editor: {
+                    allowBlank: false
+                }
             },{
                 dataIndex: 'nameEng',            
                 width: 100,    
                 text: '용어명(영문)',   
-                align: 'center'
+                align: 'center',
+                editor: {}
             },{
                 dataIndex: 'abbreviationEng',    
                 width: 100,    
                 text: '약어(영문)',     
-                align: 'center'
+                align: 'center',
+                editor: {}
             },{
                 dataIndex: 'detail',            
-                width: 100,    
+                width: 200,    
                 text: '상세내역',        
-                align: 'center'
+                align: 'center',
+                editor: {}
             },{
-                dataIndex: 'cmt',                
-                width: 100,    
+                dataIndex: 'comment',                
+                width: 250,    
                 text: '비고',              
-                align: 'left'
+                align: 'left',
+                editor: {}
             }
           ];                           
         	    
@@ -129,8 +137,13 @@ Ext.define('Connect.view.admin.dictionary.GridDict', {
     		text: '조회',    	 	
     	 	iconCls: 'x-fa fa-search',
 	    	scope: this,
-	    	handler: function(target, event) {
-				this.fnLoad();
+	    	handler: function(target, event) {				
+                var val = this.getComponent('tool').getComponent('searchField').value;    		    	    		                
+                this.fnClearExtraParam();
+                if (val) {    		                            
+                    this.fnSetExtraParam(this.querystr,val);
+                }  		    		                
+                this.fnLoad();
 			}
 	},{
             xtype: 'button',
@@ -138,10 +151,7 @@ Ext.define('Connect.view.admin.dictionary.GridDict', {
             iconCls: 'x-fa fa-file-o',
             scope: this,
              handler: function() {        
-                var rec = Ext.create(this.getStore().getModel(),{});
-                console.log(this.getStore());
-                console.log(this.getStore().getModel());
-                console.log(rec);
+                var rec = Ext.create(this.getStore().getModel(),{});                
 
                  this.fnAddRecord(this, rec,null, 0, null, null);
             }
@@ -162,28 +172,9 @@ Ext.define('Connect.view.admin.dictionary.GridDict', {
                 Ext.Ajax.setCors(true);
                 this.fnSave();
             }
-        });    
-
-		  );	
+        });    		  	
     	
     	config.items = items;
         return Ext.create('widget.toolbar', config);
-    },
-    
-    fnLoad: function() {
-    	var me = this;
-    	
-    	me.store.proxy.setExtraParams({});    	
-    	
-    	if (me.querystr) {    		
-    		
-    		var val = me.getComponent('tool').getComponent('searchField').value;    		    	    		
-    		
-    		if (val) {    			    	
-    			me.store.proxy.setExtraParam(me.querystr, val);    			    			
-    		}  		    		
-    	}    	
-    	    	    	
-    	me.store.load();
     }
 });

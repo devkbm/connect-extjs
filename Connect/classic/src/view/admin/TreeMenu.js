@@ -80,7 +80,7 @@ Ext.define('Connect.view.admin.TreeMenu', {
 					            {
 					            	text: '공통코드그룹',
 					                title: '공통코드그룹',					                					                					                
-					                pgmId: 'Connect.view.admin.code.ConCodeInfo',					                
+					                pgmId: 'Connect.view.code.ConCode',					                
 					                leaf: true
 					            }
 					           

@@ -42,26 +42,38 @@ Ext.define('nx.grid.GridBase',{
 	onAfterLoad: function (store, records, successful, operation, eOpts ) {
 		this.fnDetailGridClear();	
 	},
+	fnSetExtraParam : function(name, value) {
+		this.store.getProxy().setExtraParam(name, value);   
+	},
+	fnClearExtraParam : function() {
+		this.store.getProxy().setExtraParams({});		
+	},
 	fnLoad : function() {		
 		this.store.load({			
 		    scope: this,
 		    callback: function(records, operation, success) {
-		        //console.log(records);
-		    	Ext.log({indent:1},'aaa');
+				Ext.toast(records.length + ' 건 조회가 완료되었습니다.', '조회 완료', 't','x-fa fa-search');
+		        
+		    	//Ext.log({indent:1},'aaa');				
 		    }
 		});
 	},
 	fnLoadParam : function(param) {
+		fnClearExtraParam();				
 		this.store.getProxy().setExtraParams(param);
 		this.store.load({			
 		    scope: this,
-		    callback: function(records, operation, success) {		        
-		        console.log(records);
+		    callback: function(records, operation, success) {					
+		        Ext.toast(records.length + ' 건 조회가 완료되었습니다.', '조회 완료', 't','x-fa fa-search');
 		    }
 		});
 	},
 	fnSave: function() {
-		this.store.sync();
+		this.store.sync({
+			callback : function(batch, options) {
+				Ext.toast('저장이 완료되었습니다.', '저장 완료', 't','x-fa fa-save');				
+		}
+	});
 	},
 	/**
 	 * 디테일 그리드로 설정된 그리드를 조회

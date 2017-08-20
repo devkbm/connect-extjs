@@ -142,6 +142,11 @@ Ext.define('Connect.view.board.article.GridArticle', {
     		}  		    		
     	}    	
     	    	    	
-    	me.store.load();
+    	me.store.load({			
+		    scope: this,
+		    callback: function(records, operation, success) {					
+		        Ext.toast(records.length + ' 건 조회가 완료되었습니다.', '조회 완료', 't','x-fa fa-search');
+		    }
+		});
     }
 });

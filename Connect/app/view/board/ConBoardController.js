@@ -48,7 +48,7 @@ Ext.define('Connect.view.board.ConBoardController', {
 			listeners: {
                 scope: this,
                 aftersaved: function(obj,rec) {		
-                	
+                	Ext.toast('저장이 완료되었습니다.', '저장 완료', 't','x-fa fa-save');	
                 	//var upload = obj.getComponent('tbUpload').getComponent('upload');		                	
 					//console.log(rec.data.fkBoard);
                 	this.fnLoadTab(this.getViewModel().get('fkBoard'));
@@ -80,12 +80,10 @@ Ext.define('Connect.view.board.ConBoardController', {
                 }
             }
 		};
-    	
-		console.log(config);
+    			
 		if ( type == "update" ) {
 			Ext.applyIf(config,{itemId : 'panel'+fkBoard+pkArticle});
-			rtn = Ext.create('Connect.view.board.article.PanelArticleWrite', config);	
-			//rtn.getFileInfo('Board',pkArticle);
+			rtn = Ext.create('Connect.view.board.article.PanelArticleWrite', config);			
 		} else {
 			rtn = Ext.create('Connect.view.board.article.PanelArticleWrite', config);
 		}
@@ -204,22 +202,6 @@ Ext.define('Connect.view.board.ConBoardController', {
 				    }
 				});	    	
 		    }
-		});	 
-
- 		/*console.log(pkArticle);
- 		var tab = Ext.create('Connect.view.board.article.PanelArticleWrite', {
-					fkBoard: fkBoard,
-					closable: true,
-					hidden : true,
-					listeners: {
-		                scope: this,
-		                afterdeleted: function(v,rec) {								         
-							this.fnLoadTab(rec.data.fkBoard);
-		                	v.close();	                	
-		                }
-		            }
-				});						
- 		tab.fnDelete(Connect.model.Article, pkArticle,{fkBoard:fkBoard, pkArticle: pkArticle}); 
-		 */		 	 		
+		});	 	 	 		
 	}
 });
