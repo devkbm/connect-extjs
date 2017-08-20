@@ -125,7 +125,7 @@ Ext.define('nx.grid.GridBase',{
 		var store = grid.getStore();		
 		var selModel = grid.getSelectionModel();
 		var edit = grid.getPlugin('rowEditing');
-		
+		console.log(store);
 		if (Ext.isEmpty(rec)) {
             		rec = Ext.create(grid.getStore().getModel(),{});
         	}
