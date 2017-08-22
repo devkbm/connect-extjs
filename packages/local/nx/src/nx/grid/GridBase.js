@@ -36,7 +36,7 @@ Ext.define('nx.grid.GridBase',{
 			load: {fn :this.onAfterLoad, scope: this}
 		})
 	},	
-	onSelect: function( rowModel, record, index, eOpts ) {
+	onSelect: function( rowModel, record, index, eOpts ) {		
 		this.fnDetailGridLoad(record);
 	},
 	onAfterLoad: function (store, records, successful, operation, eOpts ) {
@@ -52,19 +52,21 @@ Ext.define('nx.grid.GridBase',{
 		this.store.load({			
 		    scope: this,
 		    callback: function(records, operation, success) {
-				Ext.toast(records.length + ' 건 조회가 완료되었습니다.', '조회 완료', 't','x-fa fa-search');
+				if (records)
+					Ext.toast(records.length + ' 건 조회가 완료되었습니다.', '조회 완료', 't','x-fa fa-search');
 		        
 		    	//Ext.log({indent:1},'aaa');				
 		    }
 		});
 	},
 	fnLoadParam : function(param) {
-		fnClearExtraParam();				
+		this.fnClearExtraParam();				
 		this.store.getProxy().setExtraParams(param);
 		this.store.load({			
 		    scope: this,
 		    callback: function(records, operation, success) {					
-		        Ext.toast(records.length + ' 건 조회가 완료되었습니다.', '조회 완료', 't','x-fa fa-search');
+				if (records)
+		        	Ext.toast(records.length + ' 건 조회가 완료되었습니다.', '조회 완료', 't','x-fa fa-search');
 		    }
 		});
 	},
@@ -72,8 +74,8 @@ Ext.define('nx.grid.GridBase',{
 		this.store.sync({
 			callback : function(batch, options) {
 				Ext.toast('저장이 완료되었습니다.', '저장 완료', 't','x-fa fa-save');				
-		}
-	});
+			}
+		});
 	},
 	/**
 	 * 디테일 그리드로 설정된 그리드를 조회
@@ -81,7 +83,7 @@ Ext.define('nx.grid.GridBase',{
 	 * @return {Boolean}
 	 */
 	fnDetailGridLoad: function(record) {		
-		
+		console.log(record);
 		var rtn = false; 
 						
 		if (this.gridDetail instanceof Array) {

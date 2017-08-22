@@ -5,6 +5,8 @@
 Ext.define('Connect.view.code.ConCode', {
     extend: 'Ext.container.Container',
     alias: 'widget.conCode',
+    defaultListenerScope: true,
+    referenceHolder: true,
     //controller: 'board',
     viewModel: {
         type: 'code'
@@ -15,19 +17,30 @@ Ext.define('Connect.view.code.ConCode', {
         'Connect.view.code.article.GridCode'        
     ],
     layout: {
-    	 type: 'vbox',
+    	 type: 'hbox',
     	 align: 'stretch'
     },        
     //height: 800,
     //floating: true,
-    items: [{
+    items: [{        
         xtype: 'gridCodeGroup',
-        reference: 'gridCodeGroup'
+        reference: 'gridCodeGroup',
+        flex:1
         //gridDetail: {obj: lookupReference('gridCode'),fk:'codeGroup'}
     },{        
         xtype: 'gridCode',        
-        reference: 'gridCode'
+        reference: 'gridCode',
+        flex:1
         //gridMaster: 
-    }]
+    }],
+    listeners: {
+        boxready : function( view, width, height, eOpts ) {
+            var gridCodeGroup = this.lookupReference('gridCodeGroup');
+            var gridCode = this.lookupReference('gridCode');
 
+            gridCodeGroup.gridDetail = [{obj: gridCode,fk:'codeGroup'}];
+
+            gridCode.gridMatser = gridCodeGroup;
+        }
+    }
 });
