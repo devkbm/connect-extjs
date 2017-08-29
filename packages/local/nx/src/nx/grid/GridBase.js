@@ -53,9 +53,9 @@ Ext.define('nx.grid.GridBase',{
 		    scope: this,
 		    callback: function(records, operation, success) {
 				if (records)
-					Ext.toast(records.length + ' 건 조회가 완료되었습니다.', '조회 완료', 't','x-fa fa-search');
+					Ext.toast(records.length + ' 건 조회가 완료되었습니다.', '조회 완료', 'tr','x-fa fa-search');
 		        
-		    	//Ext.log({indent:1},'aaa');				
+		    	this.fnDetailGridClear();
 		    }
 		});
 	},
@@ -66,14 +66,15 @@ Ext.define('nx.grid.GridBase',{
 		    scope: this,
 		    callback: function(records, operation, success) {					
 				if (records)
-		        	Ext.toast(records.length + ' 건 조회가 완료되었습니다.', '조회 완료', 't','x-fa fa-search');
+					Ext.toast(records.length + ' 건 조회가 완료되었습니다.', '조회 완료', 'tr','x-fa fa-search');
+				this.fnDetailGridClear();
 		    }
 		});
 	},
 	fnSave: function() {
 		this.store.sync({
 			callback : function(batch, options) {
-				Ext.toast('저장이 완료되었습니다.', '저장 완료', 't','x-fa fa-save');				
+				Ext.toast('저장이 완료되었습니다.', '저장 완료', 'tr','x-fa fa-save');				
 			}
 		});
 	},
@@ -82,8 +83,7 @@ Ext.define('nx.grid.GridBase',{
 	 * @param {} record
 	 * @return {Boolean}
 	 */
-	fnDetailGridLoad: function(record) {		
-		console.log(record);
+	fnDetailGridLoad: function(record) {				
 		var rtn = false; 
 						
 		if (this.gridDetail instanceof Array) {
@@ -114,25 +114,25 @@ Ext.define('nx.grid.GridBase',{
 			}		
 		}
 	},
-	    /**
-	     * 그리드 행추가 기능
-	     * @param grid        현재 그리드
-	     * @param rec        행추가할 레코드
-	     * @param idx         행추가할 레코드 위치
-	     * @param colIdx    에디터가 활성화될 위치
-	     * @param callback    행추가후 실행될 callback function
-	     * @param scope        scope
-	     */
+	/**
+	 * 그리드 행추가 기능
+	 * @param grid		현재 그리드
+	 * @param rec       행추가할 레코드
+	 * @param idx       행추가할 레코드 위치
+	 * @param colIdx    에디터가 활성화될 위치
+	 * @param callback  행추가 후 실행될 callback function
+	 * @param scope     scope
+	 */
 	fnAddRecord: function(grid, rec, idx, colIdx, callback, scope ) {		
 		var store = grid.getStore();		
 		var selModel = grid.getSelectionModel();
 		var edit = grid.getPlugin('rowEditing');
-		console.log(store);
+		
 		if (Ext.isEmpty(rec)) {
-            		rec = Ext.create(grid.getStore().getModel(),{});
-        	}
+            rec = Ext.create(grid.getStore().getModel(),{});
+        }
 
-        	if (Ext.isNumber(idx) && idx >= 0) {
+        if (Ext.isNumber(idx) && idx >= 0) {
 			store.insert(idx, rec);
 		} else {
 			store.add(rec);

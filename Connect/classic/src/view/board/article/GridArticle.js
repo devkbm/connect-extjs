@@ -18,42 +18,93 @@ Ext.define('Connect.view.board.article.GridArticle', {
     	 * fkboard
     	 */
     	fkBoard: null
-    },	    
-    
+    },	 
     initComponent: function() {
         var me = this;
-        
-        this.store = Ext.create('Connect.store.ArticleList');           
-        
-        this.columns = [            
-        	{dataIndex: 'seq', 		width: 60,	text: '번호', 		align: 'center'},                                   
-  		  	{dataIndex: 'sysUser',	width: 80,	text: '생성유저', 		hidden: true},
-  		  	{dataIndex: 'updDt',	width: 60,	text: '변경일', 		renderer: Ext.util.Format.dateRenderer('Y-m-d H:i:s'), editor:{xtype: 'datefield', format:'Y-m-d H:i:s'}, hidden: true},
-  		  	{dataIndex: 'updUser',	width: 80,	text: '변경유저', 		hidden: true},
-  		  	{dataIndex: 'pkArticle',width: 50,	text: '고유키',		hidden: true},
-  		  	{dataIndex: 'fkBoard',	width: 50,	text: '게시판fk',		hidden: true},
-  		  	{dataIndex: 'fileYn',	width: 50,	text: '첨부',	 		xtype:'actioncolumn', items: [{  		  																							   		  																							
-  		  																							align: 'center',		  																							
-																				                    getClass: function(value,metadata,record){																				                    																					                    																				                    
-																				                        var closed = record.get('fileYn');
-																			                            if(closed == 'Y'){
-																			                                return 'x-fa fa-floppy-o';
-																			                            }else{
-																			                                return '';
-																			                            }    
-																			                            
-																				                    }
-  		  																							}],align: 'center'},    		  	  		    		  
-  		  	{dataIndex: 'title',	width: 400,	text: '제목',	 	align: 'left',		renderer: function(value, metaData,rec) { 
-  		  																if (rec.data["checkyn"] == 'N') {
-  		  																	metaData.tdStyle = 'font-weight: bold';																			
-																		} 
-																		return value;
-																	},flex: 1},
-  		  	{dataIndex: 'sysDt',	width: 150,	text: '등록일시',	align: 'center', renderer: Ext.util.Format.dateRenderer('Y-m-d H:i:s')},
-  		  	{dataIndex: 'sysUsernm',width: 100,	text: '등록자',	 align: 'center'},
-  		  	{dataIndex: 'hitCnt', 	width: 80,	text: '조회수', 	 align: 'center'}		      		   		    		   
-          ];                           
+				
+		this.store = Ext.create('Connect.store.ArticleList');
+		
+        this.columns = [{
+				dataIndex: 'seq', 		
+				width: 60,	
+				text: '번호', 		
+				align: 'center'
+			},{
+				dataIndex: 'sysUser',	
+				width: 80,	
+				text: '생성유저', 		
+				hidden: true
+			},{
+				dataIndex: 'updDt',	
+				width: 60,	
+				text: '변경일', 		
+				renderer: Ext.util.Format.dateRenderer('Y-m-d H:i:s'), 
+				editor:{
+					xtype: 'datefield', 
+					format:'Y-m-d H:i:s'
+				}, 
+				hidden: true
+			},{
+				dataIndex: 'updUser',	
+				width: 80,	
+				text: '변경유저', 		
+				hidden: true
+			},{
+				dataIndex: 'pkArticle',
+				width: 50,	
+				text: '고유키',		
+				hidden: true
+			},{
+				dataIndex: 'fkBoard',	
+				width: 50,	
+				text: '게시판fk',		
+				hidden: true
+			},{
+				dataIndex: 'fileYn',	
+				width: 50,	
+				text: '첨부',	 		
+				xtype:'actioncolumn', 
+				items: [{  		  																							   		  																							
+  		  					align: 'center',		  																							
+							getClass: function(value,metadata,record){																				                    																					                    																				                    
+								var closed = record.get('fileYn');
+								if(closed == 'Y'){
+									return 'x-fa fa-floppy-o';
+								}else{
+									return '';
+								}    							
+							}
+						}],
+				align: 'center'
+			},{
+				dataIndex: 'title',	
+				width: 400,	
+				text: '제목',	 	
+				align: 'left',		
+				renderer: function(value, metaData,rec) { 
+							if (rec.data["checkyn"] == 'N') {
+								metaData.tdStyle = 'font-weight: bold';																			
+							} 
+							return value;
+						},
+				flex: 1
+			},{
+				dataIndex: 'sysDt',	
+				width: 150,	
+				text: '등록일시',	
+				align: 'center', 
+				renderer: Ext.util.Format.dateRenderer('Y-m-d H:i:s')
+			},{
+				dataIndex: 'sysUsernm',
+				width: 100,	
+				text: '등록자',
+				align: 'center'
+			},{
+				dataIndex: 'hitCnt', 	
+				width: 80,	
+				text: '조회수', 	 
+				align: 'center'
+			}];                           
         	    
     	this.querycols = [{		
 			text: '제목',
@@ -113,8 +164,7 @@ Ext.define('Connect.view.board.article.GridArticle', {
             }	                
     	},{
     		itemId: 'refresh',
-    		text: '조회',
-    	 	//icon: '/images/icon/zoom.png',
+    		text: '조회',    	 	
     	 	iconCls: 'x-fa fa-search',
 	    	scope: this,
 	    	handler: function(target, event) {
@@ -128,25 +178,24 @@ Ext.define('Connect.view.board.article.GridArticle', {
     
     fnLoad: function() {
     	var me = this;
-    	
-    	me.store.proxy.setExtraParams({});
-    	
-    	me.store.proxy.setExtraParam('fkBoard', me.fkBoard);
-    	
-    	if (me.querystr) {    		
-    		
-    		var val = me.getComponent('tool').getComponent('searchField').value;    		    	    		
-    		
-    		if (val) {    			    	
-    			me.store.proxy.setExtraParam(me.querystr, val);    			    			
-    		}  		    		
-    	}    	
-    	    	    	
-    	me.store.load({			
-		    scope: this,
-		    callback: function(records, operation, success) {					
-		        Ext.toast(records.length + ' 건 조회가 완료되었습니다.', '조회 완료', 't','x-fa fa-search');
-		    }
-		});
+		var store = me.store;
+		
+		store.getProxy().setExtraParam('fkBoard', me.fkBoard);
+			
+		if (me.querystr) {    		
+			
+			var val = me.getComponent('tool').getComponent('searchField').value;    		    	    		
+			
+			if (val) {    			    	
+				store.getProxy().setExtraParam(me.querystr, val);    			    			
+			}  		    		
+		}    	
+						
+		me.store.load({			
+			scope: this,
+			callback: function(records, operation, success) {					
+				Ext.toast(records.length + ' 건 조회가 완료되었습니다.', '조회 완료', 'tr','x-fa fa-search');
+			}
+		});		
     }
 });

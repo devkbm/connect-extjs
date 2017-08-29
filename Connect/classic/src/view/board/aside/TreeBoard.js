@@ -17,9 +17,11 @@ Ext.define('Connect.view.board.aside.TreeBoard', {
 		ptype: 'treefilter',
         allowParentFolders: true
     }],
-    
+    bind: {
+        store : '{boardTreeStore}'
+    }, 
     initComponent: function() {
-    	this.store = Ext.getStore('BoardTree');
+    	//this.store = Ext.getStore('BoardTree');
     	
     	var today = new Date();    	    	
 			

@@ -1,5 +1,5 @@
 Ext.define('Connect.store.BoardTree', {
- 	extend: 'Ext.data.TreeStore',
+    extend: 'Ext.data.TreeStore',    
     model: 'Connect.model.BoardTree',
     nodeParam: 'parentId',
     defaultRootProperty: 'data',

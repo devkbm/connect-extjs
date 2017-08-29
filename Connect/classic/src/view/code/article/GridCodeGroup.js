@@ -20,39 +20,37 @@ Ext.define('Connect.view.code.article.GridCodeGroup', {
     initComponent: function() {
         var me = this;                
 
-        this.columns = [
-	    {
-                dataIndex: 'codeGroup',            
-                width: 80,    
-                text: '코드그룹',        
-                align: 'left',
-                editor: {
-                    allowBlank: false
-                }
-            },{
-                dataIndex: 'codeGroupName',            
-                width: 130,    
-                text: '코드그룹명',          
-                align: 'left',
-                editor: {
-                    allowBlank: false
-                }
-            },{
-                dataIndex: 'codeLength',        
-                width: 100,    
-                text: '코드길이',     
-                align: 'left',
-                editor: {
-                    allowBlank: false
-                }
-            },{
-                dataIndex: 'cmt',            
-                width: 230,    
-                text: '비고',   
-                align: 'left',
-                editor: {}
+        this.columns = [{        
+            dataIndex: 'codeGroup',            
+            width: 80,    
+            text: '코드그룹',        
+            align: 'left',
+            editor: {
+                allowBlank: false
             }
-          ];                           
+        },{
+            dataIndex: 'codeGroupName',            
+            width: 130,    
+            text: '코드그룹명',          
+            align: 'left',
+            editor: {
+                allowBlank: false
+            }
+        },{
+            dataIndex: 'codeLength',        
+            width: 100,    
+            text: '코드길이',     
+            align: 'left',
+            editor: {
+                allowBlank: false
+            }
+        },{
+            dataIndex: 'cmt',            
+            width: 230,    
+            text: '비고',   
+            align: 'left',
+            editor: {}
+        }];                           
         	    
     	this.querycols = [{		
 			text: '코드그룹',
@@ -123,7 +121,7 @@ Ext.define('Connect.view.code.article.GridCodeGroup', {
                 }  		    		                
                 this.fnLoad();
 			}
-	},{
+	    },{
             xtype: 'button',
             text: '행추가',        
             iconCls: 'x-fa fa-file-o',

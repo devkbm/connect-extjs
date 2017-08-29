@@ -19,10 +19,7 @@ Ext.define('Connect.view.board.ConBoard', {
     	 align: 'stretch'
     },    
     viewModel: {
-    	data:{
-    		fkBoard: null,
-    		pkArticle: null
-    	}
+        type: 'board'
     },
     //height: 800,
     //floating: true,

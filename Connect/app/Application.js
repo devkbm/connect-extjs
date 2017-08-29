@@ -10,10 +10,8 @@ Ext.define('Connect.Application', {
         
     stores: [
         // TODO: add global / shared stores here                
-        'NavigationTree',
-        'BoardTree',
-        'AdminBoardTree',
-        'ArticleHitCnt'
+        'NavigationTree',        
+        'AdminBoardTree'        
     ],
 
     views: [

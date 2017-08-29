@@ -10,14 +10,16 @@ Ext.define('Connect.view.board.article.ConArticleViewController', {
 	},
 	
 	fnGridSelect: function(t, record, index, eOpts) {	
+		var viewModel 	= this.getViewModel();
+		var view 		= this.getView();
+		var hitStore 	= this.getViewModel().getStore('articleHitCntStore');
 		var panelArticleView = this.lookupReference('panelArticleView');
+
 		panelArticleView.setActive(record);
-		
-		this.getViewModel().set('pkArticle', record.data.pkArticle);		
-		this.getView().pkArticle = record.data.pkArticle;		
-		
-		var hitStore = Ext.getStore('ArticleHitCnt');
-		
+				
+		viewModel.set('pkArticle', record.data.pkArticle);		
+		view.pkArticle = record.data.pkArticle;		
+						
 		hitStore.proxy.setExtraParam('id',record.data.pkArticle);
 		hitStore.proxy.setExtraParam('userid',"test");
 		hitStore.load({

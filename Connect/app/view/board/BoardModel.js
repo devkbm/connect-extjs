@@ -6,7 +6,25 @@ Ext.define('Connect.view.board.BoardModel', {
         fkBoard: null,
     	pkArticle: null        	
     },
-    stores: {        
+    stores: {      
+        boardTreeStore: {
+            type: 'tree',
+            model: 'Connect.model.BoardTree',
+            nodeParam: 'parentId',
+            defaultRootProperty: 'data',
+            proxy: {
+                type: 'ajax',
+                url: 'http://localhost:8090/grw/boardHierarchy',
+                reader: {
+                    type: 'json'
+                },
+                filterParam: 'query'        
+            },        
+            root: {
+                text: 'root',        
+                expanded: true
+            }
+        },
         boardStore : {
             model: 'Connect.model.Board',
             proxy: {

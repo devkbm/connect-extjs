@@ -4,9 +4,10 @@ Ext.define('Connect.view.board.ConBoardController', {
 
 	onBoardItemClick: function( view, record, item, index, e, eOpts ) {		
 		var pkBoard = record.data.id;
-		
-    	this.getViewModel().set('fkBoard',pkBoard);  
-    	this.getViewModel().set('pkArticle',null);       	    
+		var viewModel = this.getViewModel();
+
+    	viewModel.set('fkBoard',pkBoard);  
+    	viewModel.set('pkArticle',null);       	    
     	
 		this.fnLoadTab(pkBoard, record.data.text);    				    	
     },
@@ -33,8 +34,9 @@ Ext.define('Connect.view.board.ConBoardController', {
     },
     
     fnCreateArticleWrite: function(type, title) {
-    	var fkBoard 	= this.getViewModel().get('fkBoard');
-    	var pkArticle 	= this.getViewModel().get('pkArticle');
+		var viewModel 	= this.getViewModel();
+    	var fkBoard 	= viewModel.get('fkBoard');
+    	var pkArticle 	= viewModel.get('pkArticle');
     	var rtn;
     	
     	var config = {
@@ -43,40 +45,15 @@ Ext.define('Connect.view.board.ConBoardController', {
 			closable: true,
 			tabConfig: {
 				title: title,
-    			tooltip: 'A button tooltip'
+    			tooltip: title
 			},
 			listeners: {
                 scope: this,
                 aftersaved: function(obj,rec) {		
-                	Ext.toast('저장이 완료되었습니다.', '저장 완료', 't','x-fa fa-save');	
-                	//var upload = obj.getComponent('tbUpload').getComponent('upload');		                	
-					//console.log(rec.data.fkBoard);
-                	this.fnLoadTab(this.getViewModel().get('fkBoard'));
-					obj.close();
-                	/*var upload = obj.down('grid');
-	            	                                    	
-                	if (Ext.isEmpty(upload)) {
-                		this.fnLoadTab(rec.data.fkBoard);
-                		obj.close();
-                		return;
-                	} 
+                	Ext.toast('저장이 완료되었습니다.', '저장 완료', 'tr','x-fa fa-save');	
                 	
-                	// 업로드할 데이터가 없으면 바로 창 닫음
-                	if (upload.store.data.length == 0) {
-                	    this.fnLoadTab(rec.data.fkBoard);
-                		obj.close();
-                	} else {
-                		upload.on('uploadcomplete', function(panel) {		                	
-                			this.fnLoadTab(rec.data.fkBoard);
-	                		panel.close();
-	                	}, this);
-	                	
-	                	upload.pgmId = 'Board';
-                    	upload.fk = rec.data.pkArticle;
-                    	upload.onStart();
-	                	//upload.onUpload('COM',rec.data.pkArticle);
-                	}*/
-                			                	 		                			                									               
+                	this.fnLoadTab(this.getViewModel().get('fkBoard'));
+					obj.close();                	                			                	 		                			                									               
                 }
             }
 		};
@@ -116,13 +93,17 @@ Ext.define('Connect.view.board.ConBoardController', {
 		var fkBoard 	= this.getViewModel().get('fkBoard');    	
 		var tabpanel 	= this.lookupReference('tabboard');
 		var tab 		= null;
-					
+				
+		/**
+		 * ConArticleView 클래스일 경우 itemId : con + fkBoard
+		 * PanelArticleWrite 클래스일 경우 itemId : con +fkBoard + pkArticle
+		 */
 		if (pgmId == 'Connect.view.board.article.ConArticleView') {
 			tab	= tabpanel.getComponent('con'+fkBoard);
-		} else if ( pgmId == 'Connect.view.board.article.PanelArticleWrite' && type == 'update' ) {
-			var curtab	= tabpanel.getComponent('con'+fkBoard);
+		} else if ( pgmId == 'Connect.view.board.article.PanelArticleWrite' && type == 'update' ) {			
+			var parentTab	= tabpanel.getComponent('con'+fkBoard);
 			
-			if (curtab) {				
+			if (parentTab) {				
 				tab = tabpanel.getComponent('panel'+fkBoard+curtab.pkArticle);
 			}
 		}
@@ -147,7 +128,7 @@ Ext.define('Connect.view.board.ConBoardController', {
 	
 		
 	/**
-	 * 탭 선택시
+	 * 탭 선택 변경 이벤트
 	 */
 	fnTabChange: function( tabPanel, newCard, oldCard, eOpts ) {		
 		var treeBoard = this.lookupReference('treeBoard');
@@ -185,7 +166,6 @@ Ext.define('Connect.view.board.ConBoardController', {
 		var contab = tabpanel.getComponent('con'+fkBoard);
  		var pkArticle = contab.pkArticle; 		
 		
-
 		Connect.model.Article.getProxy().extraParams = {fkBoard: fkBoard};
 
 		Connect.model.Article.load(pkArticle,{
@@ -195,8 +175,7 @@ Ext.define('Connect.view.board.ConBoardController', {
 					scope: this,				    
 				    callback: function(record, operation, success) {
 				        // do something whether the save succeeded or failed
-				    	//this.fireEvent('afterdeleted', this, record, operation, success );
-						console.log(record);
+				    	//this.fireEvent('afterdeleted', this, record, operation, success );						
 						this.fnLoadTab(this.getViewModel().get('fkBoard'));
 		                //this.close();	                	
 				    }
