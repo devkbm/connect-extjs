@@ -101,10 +101,9 @@ Ext.define('Connect.view.board.ConBoardController', {
 		if (pgmId == 'Connect.view.board.article.ConArticleView') {
 			tab	= tabpanel.getComponent('con'+fkBoard);
 		} else if ( pgmId == 'Connect.view.board.article.PanelArticleWrite' && type == 'update' ) {			
-			var parentTab	= tabpanel.getComponent('con'+fkBoard);
-			
+			var parentTab	= tabpanel.getComponent('con'+fkBoard);			
 			if (parentTab) {				
-				tab = tabpanel.getComponent('panel'+fkBoard+curtab.pkArticle);
+				tab = tabpanel.getComponent('panel'+fkBoard+parentTab.pkArticle);
 			}
 		}
 		
