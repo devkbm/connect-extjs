@@ -9,7 +9,7 @@ Ext.define('Connect.model.TaskGroup', {
 			 {name: 'updDt',			type: 'date', 	dateFormat: 'c',	persist: false},
 			 {name: 'updUser',			type: 'string',	persist: false},	         	                
 	         {name: 'pkTaskGroup',		type: 'int'},	         
-	         {name: 'userId',			type: 'string'},
+	         {name: 'updUserName',		type: 'string'},
 			 {name: 'taskGroupName',	type: 'string'}
 	]
 }); 

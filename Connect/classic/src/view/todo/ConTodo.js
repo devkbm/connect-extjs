@@ -8,9 +8,9 @@ Ext.define('Connect.view.todo.ConTodo', {
         type: 'todo'
     },
     requires: [      
-        'Connect.view.code.CodeModel',
-        'Connect.view.code.article.GridCodeGroup',
-        'Connect.view.code.article.GridCode'        
+        'Connect.view.todo.TodoModel',        
+        'Connect.view.todo.article.GridTask',
+        'Connect.view.todo.aside.GridTaskGroup'
     ],
     layout: {
     	 type: 'hbox',
@@ -19,13 +19,13 @@ Ext.define('Connect.view.todo.ConTodo', {
     //height: 800,
     //floating: true,
     items: [{        
-        xtype: 'gridCodeGroup',
-        reference: 'gridCodeGroup',
+        xtype: 'gridTaskGroup',
+        reference: 'gridTaskGroup',
         flex:1
         //gridDetail: {obj: lookupReference('gridCode'),fk:'codeGroup'}
     },{        
-        xtype: 'gridCode',        
-        reference: 'gridCode',
+        xtype: 'gridTask',        
+        reference: 'gridTask',
         flex:1
         //gridMaster: 
     }],

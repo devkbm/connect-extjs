@@ -73,8 +73,10 @@ Ext.define('Connect.view.main.Main', {
 				xtype: 'treelist',		
 		        ui: 'nav',
 				reference: 'navigationTreeList',
-		        itemId: 'navigationTreeList',        
-		        store: 'NavigationTree',	        
+				itemId: 'navigationTreeList',        
+				bind: {
+					store: '{navigationTree}'
+				},		        
 		        expanderFirst: true,
 		        listeners: {
 		            selectionchange: 'onNavigationTreeSelectionChange'
