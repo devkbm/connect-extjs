@@ -97,8 +97,10 @@ Ext.define('Connect.view.todo.aside.GridTaskGroup', {
 	    	handler: function(target, event) {				
                 var val = this.getComponent('tool').getComponent('searchField').value;    		    	    		                
                 this.fnClearExtraParam();
+                this.fnSetExtraParam('userId','anonymousUser');
                 if (val) {    		                            
-                    this.fnSetExtraParam(this.querystr,val);
+                    //this.fnSetExtraParam(this.querystr,val);
+                    this.fnSetExtraParam('userId','anonymousUser');
                 }  		    		                
                 this.fnLoad();
 			}
@@ -107,10 +109,24 @@ Ext.define('Connect.view.todo.aside.GridTaskGroup', {
             text: '행추가',        
             iconCls: 'x-fa fa-file-o',
             scope: this,
-             handler: function() {        
-                var rec = Ext.create(this.getStore().getModel(),{});                
+             handler: function() {      
 
-                 this.fnAddRecord(this, rec,null, 0, null, null);
+                Ext.Ajax.request({ 
+                    url:"http://localhost:8090/todo/taskgroups/new",
+                    method:"GET",
+                    params: {
+                        username : 'kbm0417',
+                        password : '1234',
+                        submit : 'Login'
+                    },
+                    success:function( result, request ){
+                        Ext.Msg.alert( "Success", "Data return from photo.json" + result.responseText );
+                    },
+                    failure: function( result, request ){
+                        Ext.Msg.alert( "Failed", result.responseText );
+                    }
+                
+                });
             }
         },{
             xtype: 'button',
